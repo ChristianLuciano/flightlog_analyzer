@@ -27,7 +27,7 @@ pip install -e .
 - **Automatic Discovery**: Recursive traversal to discover all DataFrames and signals
 - **Path-Based Access**: Access data using hierarchical paths (e.g., `Sensors.IMU.Accelerometer.accel_x`)
 - **Cross-DataFrame Alignment**: Automatic time-based alignment of signals with different sampling rates
-- **Folder Import**: Recursively import all CSV files from a folder structure (e.g., `Flight_001/CU/sensors/*.csv`)
+- **Folder Import**: Recursively import all CSV files from a folder structure (e.g., `Flight_001/COMP1/sensors/*.csv`)
 - **Signal Assignment**: Map raw columns to standard flight dynamics variables with conversion factors
 
 ### Visualization
@@ -129,26 +129,26 @@ print(f"Loaded: {summary['loaded_count']} files")
 Example folder structure:
 ```
 Flight_001/
-├── CU/
+├── COMP1/
 │   ├── sensors/
 │   │   ├── imu.csv
 │   │   └── gps.csv
 │   └── control.csv
-├── MU/
+├── COMP2/
 │   └── motors.csv
-└── NU/
+└── COMP3/
     └── nav.csv
 ```
 
 Results in:
 ```python
 {
-    'CU': {
+    'COMP1': {
         'sensors': {'imu': DataFrame, 'gps': DataFrame},
         'control': DataFrame
     },
-    'MU': {'motors': DataFrame},
-    'NU': {'nav': DataFrame}
+    'COMP2': {'motors': DataFrame},
+    'COMP3': {'nav': DataFrame}
 }
 ```
 
