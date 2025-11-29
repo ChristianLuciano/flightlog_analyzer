@@ -2,63 +2,24 @@
 
 [![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](CHANGELOG.md)
 [![Python](https://img.shields.io/badge/python-3.8%2B-green.svg)](https://www.python.org/)
+[![Tests](https://img.shields.io/badge/tests-910%20passed-brightgreen.svg)]()
+[![Coverage](https://img.shields.io/badge/coverage-74%25-yellow.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](LICENSE)
 
-A high-performance interactive dashboard for analyzing flight log data from pre-parsed pandas DataFrames. Designed to handle long-duration (30-60 minute), high-frequency (microsecond-level) multi-signal datasets with advanced geospatial visualization, computed signal capabilities, and real-time playback features.
+A high-performance interactive dashboard for analyzing flight log data from pre-parsed pandas DataFrames. Designed to handle long-duration (30-60 minute), high-frequency (microsecond-level) multi-signal datasets with advanced geospatial visualization and computed signal capabilities.
+
+![Dashboard Screenshot](docs/screenshot.png)
 
 ## Quick Install
 
 ```bash
-# Option 1: pip install (recommended)
-pip install flight-log-dashboard
-
-# Option 2: From source
-git clone https://github.com/flight-log/dashboard.git
-cd dashboard
-pip install -e .
-```
-
-**Standalone executables** available for Windows, macOS, and Linux - see [Releases](https://github.com/flight-log/dashboard/releases).
-
-## Features
-
-### Data Handling
-- **Hierarchical Data Structure**: Support for nested dictionary structures containing pandas DataFrames
-- **Automatic Discovery**: Recursive traversal to discover all DataFrames and signals
-- **Path-Based Access**: Access data using hierarchical paths (e.g., `Sensors.IMU.Accelerometer.accel_x`)
-- **Cross-DataFrame Alignment**: Automatic time-based alignment of signals with different sampling rates
-- **Folder Import**: Recursively import all CSV files from a folder structure (e.g., `Flight_001/COMP1/sensors/*.csv`)
-- **Signal Assignment**: Map raw columns to standard flight dynamics variables with conversion factors
-
-### Visualization
-- **Time Series Plots**: Interactive plots with zoom, pan, and linked cursors
-- **FFT Analysis**: Frequency domain visualization with configurable windowing
-- **Geographic Maps**: 2D and 3D flight path visualization with multiple basemap options
-- **Statistical Plots**: Histograms, box plots, correlation matrices
-- **Event Annotations**: Automatic event detection and display on all plots
-
-### Computed Signals
-- **Formula-Based Computation**: Create derived signals using mathematical expressions
-- **Built-in Functions**: Math, signal processing, and geographic operations
-- **Dependency Resolution**: Automatic handling of signal dependencies
-- **Caching**: Smart caching for performance optimization
-
-### Performance
-- **LTTB Downsampling**: Efficient visualization of large datasets
-- **Lazy Loading**: Load data on-demand for better memory usage
-- **WebGL Rendering**: Hardware-accelerated graphics for smooth interactions
-- **Caching**: Multi-level caching for computed results
-
-## Installation
-
-```bash
 # Clone the repository
-git clone https://github.com/your-repo/flight-log-dashboard.git
-cd flight-log-dashboard
+git clone https://github.com/ChristianLuciano/flightlog_analyzer.git
+cd flightlog_analyzer
 
 # Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+python -m venv flog
+source flog/bin/activate  # On Windows: flog\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
@@ -67,13 +28,53 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
+## Features
+
+### Data Handling
+- **Hierarchical Data Structure**: Support for nested dictionary structures containing pandas DataFrames
+- **Automatic Discovery**: Recursive traversal to discover all DataFrames and signals
+- **Path-Based Access**: Access data using hierarchical paths (e.g., `Sensors.IMU.Accelerometer.accel_x`)
+- **Cross-DataFrame Alignment**: Automatic time-based alignment of signals with different sampling rates
+- **Folder Import**: Recursively import all CSV files from a folder structure
+- **Signal Assignment**: Map raw columns to standard flight dynamics variables with conversion factors
+- **Multi-Source Signals**: Group measurement, command, and estimated signals for comparison plots
+
+### Visualization
+- **Time Series Plots**: Interactive plots with zoom, pan, and linked cursors
+- **FFT Analysis**: Frequency domain visualization with configurable windowing
+- **Geographic Maps**: 2D flight path visualization with multiple basemap options
+- **Statistical Plots**: Histograms, scatter plots, X-Y plots
+- **3D Visualization**: 3D trajectory and signal plots
+- **Signal Grouping**: Automatic grouping of related signals (measurement vs command vs estimated)
+
+### User Interface
+- **Collapsible Sidebar**: All sidebar sections are collapsible for more screen space
+  - Data Summary
+  - Quick Select
+  - Signal Selector
+  - Plot Builder
+  - Events Filter
+- **Dark Theme**: Modern dark theme optimized for long analysis sessions
+- **Responsive Layout**: Adapts to different screen sizes
+
+### Computed Signals
+- **Formula-Based Computation**: Create derived signals using mathematical expressions
+- **Built-in Functions**: Math, signal processing, and geographic operations
+- **Dependency Resolution**: Automatic handling of signal dependencies
+- **Caching**: Smart caching for performance optimization
+
+### Performance
+- **LTTB Downsampling**: Efficient visualization of large datasets (tested with millions of points)
+- **Douglas-Peucker Simplification**: Path simplification for geographic data
+- **Lazy Loading**: Load data on-demand for better memory usage
+- **WebGL Rendering**: Hardware-accelerated graphics for smooth interactions
+
 ## Quick Start
 
 ```python
 import pandas as pd
 import numpy as np
 from src.core.app import create_app, run_app
-from src.data.loader import load_flight_data
 
 # Create sample data
 flight_data = {
@@ -93,15 +94,17 @@ flight_data = {
     },
 }
 
-# Load data
-loader = load_flight_data(flight_data)
-
 # Create and run app
 app = create_app(flight_data=flight_data)
 run_app(app)
 ```
 
 Then open http://127.0.0.1:8050 in your browser.
+
+Or run the example:
+```bash
+python examples/basic_usage.py
+```
 
 ## Folder Import
 
@@ -129,26 +132,26 @@ print(f"Loaded: {summary['loaded_count']} files")
 Example folder structure:
 ```
 Flight_001/
-├── COMP1/
+├── CU/
 │   ├── sensors/
 │   │   ├── imu.csv
 │   │   └── gps.csv
 │   └── control.csv
-├── COMP2/
+├── MU/
 │   └── motors.csv
-└── COMP3/
+└── NU/
     └── nav.csv
 ```
 
 Results in:
 ```python
 {
-    'COMP1': {
+    'CU': {
         'sensors': {'imu': DataFrame, 'gps': DataFrame},
         'control': DataFrame
     },
-    'COMP2': {'motors': DataFrame},
-    'COMP3': {'nav': DataFrame}
+    'MU': {'motors': DataFrame},
+    'NU': {'nav': DataFrame}
 }
 ```
 
@@ -158,23 +161,32 @@ Map raw columns to standard flight dynamics variables with conversion factors:
 
 ```python
 from src.data.signal_assignment import (
-    AssignmentConfig, SignalAssigner, StandardSignal
+    AssignmentConfig, SignalAssigner, StandardSignal, SignalSource
 )
 
 # Create assignment configuration
 config = AssignmentConfig(name="My Drone Config", version="1.0")
 
-# Add mappings with conversion presets
+# Add mappings with conversion presets and source types
 config.add_mapping(
-    source_column='lat_raw',
+    source_column='gps_lat',
     target_signal=StandardSignal.POSITION_LATITUDE,
-    conversion='gps_1e7_to_degrees'  # Common MAVLink scaling
+    conversion='gps_1e7_to_degrees',
+    signal_source=SignalSource.MEASUREMENT  # Raw sensor data
 )
 
 config.add_mapping(
-    source_column='roll_rad',
-    target_signal=StandardSignal.ATTITUDE_ROLL,
-    conversion='rad_to_deg'
+    source_column='ekf_lat',
+    target_signal=StandardSignal.POSITION_LATITUDE,
+    conversion='gps_1e7_to_degrees',
+    signal_source=SignalSource.ESTIMATED    # Filtered/Kalman estimate
+)
+
+config.add_mapping(
+    source_column='cmd_lat',
+    target_signal=StandardSignal.POSITION_LATITUDE,
+    conversion='gps_1e7_to_degrees',
+    signal_source=SignalSource.COMMAND      # Commanded setpoint
 )
 
 # Save for reuse
@@ -183,13 +195,21 @@ config.save("configs/my_drone.json")
 # Load and apply to data
 config = AssignmentConfig.load("configs/my_drone.json")
 assigner = SignalAssigner(config)
-
-# Apply to a DataFrame
-df_converted = assigner.apply(raw_df)
-
-# Or apply to hierarchical data
 data_converted = assigner.apply_to_hierarchy(flight_data)
 ```
+
+### Signal Source Types
+
+When plotting, signals are automatically grouped by their base type and styled by source:
+
+| Source | Description | Line Style |
+|--------|-------------|------------|
+| `measurement` | Raw sensor data | Solid |
+| `command` | Commanded/setpoint values | Dashed |
+| `estimated` | Filtered/Kalman estimates | Dotted |
+| `reference` | Reference/target values | Dash-dot |
+| `simulated` | Simulation output | Long dash |
+| `raw` | Unprocessed data | Thin solid |
 
 ### Available Standard Signals
 
@@ -213,84 +233,6 @@ data_converted = assigner.apply_to_hierarchy(flight_data)
 | `mg_to_m_s2` | 0.00981 | milli-G to m/s² |
 | `us_to_s` | 1e-6 | Microseconds to seconds |
 
-## Project Structure
-
-```
-Flight_Log/
-├── app.py                 # Main entry point
-├── requirements.txt       # Python dependencies
-├── setup.py              # Package setup
-├── pyproject.toml        # Project configuration
-├── src/
-│   ├── core/             # Core application
-│   │   ├── app.py        # Dash app factory
-│   │   ├── constants.py  # Application constants
-│   │   ├── exceptions.py # Custom exceptions
-│   │   └── types.py      # Type definitions
-│   ├── data/             # Data handling
-│   │   ├── loader.py     # Data loading
-│   │   ├── hierarchy.py  # Hierarchical navigation
-│   │   ├── validator.py  # Data validation
-│   │   ├── cache.py      # Caching
-│   │   ├── alignment.py  # Signal alignment
-│   │   └── downsampling.py # Downsampling algorithms
-│   ├── visualization/    # Plotting
-│   │   ├── base.py       # Base plot class
-│   │   ├── manager.py    # Plot management
-│   │   ├── theme.py      # Theming
-│   │   ├── plots/        # Plot implementations
-│   │   └── maps/         # Map visualizations
-│   ├── computed_signals/ # Computed signals
-│   │   ├── engine.py     # Computation engine
-│   │   ├── parser.py     # Formula parser
-│   │   ├── functions.py  # Built-in functions
-│   │   └── dependencies.py # Dependency resolution
-│   ├── ui/               # User interface
-│   │   ├── app_layout.py # Main layout
-│   │   ├── callbacks.py  # Dash callbacks
-│   │   ├── components/   # UI components
-│   │   └── layouts/      # Layout management
-│   ├── config/           # Configuration
-│   ├── utils/            # Utilities
-│   └── export/           # Export functionality
-├── tests/                # Test suite
-├── examples/             # Example scripts
-├── assets/               # Static assets
-└── docs/                 # Documentation
-```
-
-## Configuration
-
-Configuration can be provided via:
-- Python dictionary
-- YAML file
-- JSON file
-- Environment variables
-
-Example configuration:
-```yaml
-theme: dark
-timestamp_column: timestamp
-max_display_points: 10000
-cache_size_mb: 512
-```
-
-## Development
-
-```bash
-# Run tests
-pytest
-
-# Run with coverage
-pytest --cov=src
-
-# Format code
-black src tests
-
-# Type checking
-mypy src
-```
-
 ## Supported File Formats
 
 | Format | Extension | Description |
@@ -302,6 +244,65 @@ mypy src
 | Excel | `.xlsx`, `.xls` | Microsoft Excel |
 | JSON | `.json` | JavaScript Object Notation |
 | MATLAB | `.mat` | MATLAB data files |
+
+## Project Structure
+
+```
+flightlog_analyzer/
+├── app.py                 # Main entry point
+├── requirements.txt       # Python dependencies
+├── setup.py              # Package setup
+├── pyproject.toml        # Project configuration
+├── src/
+│   ├── core/             # Core application
+│   │   ├── app.py        # Dash app factory
+│   │   ├── constants.py  # Application constants
+│   │   ├── exceptions.py # Custom exceptions
+│   │   └── version.py    # Version management
+│   ├── data/             # Data handling
+│   │   ├── loader.py     # Data loading
+│   │   ├── hierarchy.py  # Hierarchical navigation
+│   │   ├── folder_importer.py  # Folder import
+│   │   ├── signal_assignment.py # Signal mapping
+│   │   ├── signal_groups.py    # Multi-source grouping
+│   │   ├── validator.py  # Data validation
+│   │   ├── alignment.py  # Signal alignment
+│   │   └── downsampling.py # Downsampling algorithms
+│   ├── visualization/    # Plotting
+│   │   ├── plots/        # Plot implementations
+│   │   └── maps/         # Map visualizations
+│   ├── computed_signals/ # Computed signals engine
+│   ├── ui/               # User interface
+│   │   ├── app_layout.py # Main layout
+│   │   ├── callbacks.py  # Dash callbacks
+│   │   └── components/   # UI components
+│   ├── config/           # Configuration
+│   ├── utils/            # Utilities
+│   └── export/           # Export functionality
+├── tests/                # Test suite (910 tests)
+├── examples/             # Example scripts
+├── assets/               # Static assets (CSS)
+└── docs/                 # Documentation
+```
+
+## Development
+
+```bash
+# Run tests
+pytest
+
+# Run with coverage
+pytest --cov=src
+
+# Run specific test file
+pytest tests/unit/test_folder_import.py -v
+
+# Format code
+black src tests
+
+# Type checking
+mypy src
+```
 
 ## Building Standalone Executables
 
@@ -321,6 +322,22 @@ python scripts/build.py --archive
 
 Output will be in `dist/FlightLogDashboard/`.
 
+## Configuration
+
+Configuration can be provided via:
+- Python dictionary
+- YAML file
+- JSON file
+- Environment variables
+
+Example configuration:
+```yaml
+theme: dark
+timestamp_column: timestamp
+max_display_points: 10000
+cache_size_mb: 512
+```
+
 ## Documentation
 
 - [Installation Guide](docs/INSTALLATION.md)
@@ -338,3 +355,6 @@ MIT License - see LICENSE file for details.
 
 Contributions are welcome! Please read our contributing guidelines before submitting pull requests.
 
+## Author
+
+Christian Luciano - [GitHub](https://github.com/ChristianLuciano)
