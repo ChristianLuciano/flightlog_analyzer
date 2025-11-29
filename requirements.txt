@@ -1,0 +1,44 @@
+# Flight Log Analysis Dashboard - Dependencies
+
+# Core
+numpy>=1.21.0
+pandas>=1.3.0
+scipy>=1.7.0
+
+# Web Framework
+dash>=2.14.0
+dash-bootstrap-components>=1.5.0
+plotly>=5.18.0
+
+# Geographic
+geopy>=2.3.0
+# geopandas>=0.12.0  # Optional, uncomment if needed
+# shapely>=2.0.0     # Optional, for geometric operations
+# pyproj>=3.4.0      # Optional, for coordinate transformations
+
+# Performance
+numba>=0.57.0  # Optional, for JIT compilation
+
+# Export
+Pillow>=10.0.0      # Image export
+openpyxl>=3.1.0     # Excel export
+# kaleido>=0.2.1    # Static image export for Plotly
+
+# Configuration
+PyYAML>=6.0
+
+# Development
+pytest>=7.4.0
+pytest-cov>=4.1.0
+black>=23.0.0
+flake8>=6.1.0
+mypy>=1.5.0
+
+# Build & Packaging
+pyinstaller>=6.0.0
+build>=1.0.0
+
+# Documentation
+# sphinx>=7.0.0     # Optional, for building docs
+# sphinx-rtd-theme>=1.3.0
+

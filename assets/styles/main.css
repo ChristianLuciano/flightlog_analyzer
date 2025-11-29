@@ -1,0 +1,1063 @@
+/* Flight Log Analysis Dashboard - Main Styles */
+
+/* ============================================
+   CSS Variables & Theme
+   ============================================ */
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2c3e50;
+    --success-color: #2ecc71;
+    --warning-color: #f39c12;
+    --danger-color: #e74c3c;
+    --info-color: #1abc9c;
+    
+    --bg-dark: #1a1a2e;
+    --bg-card: #16213e;
+    --bg-sidebar: #0f3460;
+    --text-primary: #eee;
+    --text-secondary: #aaa;
+    --border-color: #2d4a6f;
+    
+    --font-primary: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+    
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+body {
+    font-family: var(--font-primary);
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 100vh;
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+}
+
+.app-container {
+    padding: 0 !important;
+    max-width: 100% !important;
+}
+
+/* ============================================
+   Header / Navbar
+   ============================================ */
+.navbar {
+    background: linear-gradient(90deg, var(--bg-dark) 0%, var(--bg-card) 100%) !important;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+}
+
+.navbar-brand-text {
+    font-size: 1.4rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, var(--primary-color), var(--info-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ============================================
+   Sidebar
+   ============================================ */
+.sidebar-col {
+    background: var(--bg-sidebar);
+    min-height: calc(100vh - 120px);
+    border-right: 1px solid var(--border-color);
+    padding: 1rem;
+}
+
+.sidebar-content {
+    position: sticky;
+    top: 1rem;
+}
+
+.card {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.card-header {
+    background: rgba(52, 152, 219, 0.1) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    font-weight: 600;
+    color: var(--primary-color);
+    padding: 0.75rem 1rem;
+}
+
+.card-body {
+    color: var(--text-primary);
+    padding: 1rem;
+}
+
+/* Data Tree */
+.data-tree-content {
+    max-height: 350px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-size: 0.8rem;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) rgba(0, 0, 0, 0.2);
+}
+
+.data-tree-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.data-tree-content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.data-tree-content::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 3px;
+}
+
+.tree-item, .tree-folder {
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin: 2px 0;
+    transition: background var(--transition-fast);
+}
+
+.tree-item:hover, .tree-folder:hover {
+    background: rgba(52, 152, 219, 0.2);
+}
+
+/* ============================================
+   Main Content
+   ============================================ */
+.main-col {
+    background: var(--bg-dark);
+    padding: 1rem;
+    min-height: calc(100vh - 120px);
+}
+
+.main-row {
+    margin: 0 !important;
+}
+
+/* Tabs */
+.nav-tabs-custom {
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 1rem;
+}
+
+.nav-tabs .nav-link {
+    color: var(--text-secondary) !important;
+    border: none !important;
+    border-bottom: 3px solid transparent !important;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    transition: all var(--transition-normal);
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--text-primary) !important;
+    background: rgba(52, 152, 219, 0.1);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary-color) !important;
+    background: transparent !important;
+    border-bottom: 3px solid var(--primary-color) !important;
+}
+
+/* ============================================
+   Plot Styling
+   ============================================ */
+.js-plotly-plot {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.js-plotly-plot .plotly {
+    background: var(--bg-card) !important;
+}
+
+/* Plotly theme overrides */
+.js-plotly-plot .main-svg {
+    background: var(--bg-card) !important;
+}
+
+.js-plotly-plot .bg {
+    fill: var(--bg-card) !important;
+}
+
+/* ============================================
+   Dropdowns & Inputs
+   ============================================ */
+
+/* Dash Dropdown - Control */
+.Select-control,
+.dash-dropdown .Select-control {
+    background: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+.Select-value-label,
+.dash-dropdown .Select-value-label {
+    color: var(--text-primary) !important;
+}
+
+.Select-placeholder,
+.dash-dropdown .Select-placeholder {
+    color: var(--text-secondary) !important;
+}
+
+/* Dash Dropdown - Menu */
+.Select-menu-outer,
+.dash-dropdown .Select-menu-outer {
+    background: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+    box-shadow: var(--shadow-lg) !important;
+}
+
+.Select-menu,
+.dash-dropdown .Select-menu {
+    background: var(--bg-card) !important;
+}
+
+.Select-option,
+.dash-dropdown .Select-option {
+    background: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    padding: 10px 12px !important;
+}
+
+.Select-option:hover,
+.Select-option.is-focused,
+.dash-dropdown .Select-option:hover,
+.dash-dropdown .Select-option.is-focused {
+    background: var(--primary-color) !important;
+    color: white !important;
+}
+
+.Select-option.is-selected,
+.dash-dropdown .Select-option.is-selected {
+    background: rgba(52, 152, 219, 0.3) !important;
+    color: var(--primary-color) !important;
+}
+
+/* Input field inside dropdown */
+.Select-input input,
+.dash-dropdown .Select-input input {
+    color: var(--text-primary) !important;
+}
+
+/* Multi-value tags */
+.Select-value,
+.dash-dropdown .Select-value {
+    background: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+.Select-value-icon,
+.dash-dropdown .Select-value-icon {
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.Select-value-icon:hover,
+.dash-dropdown .Select-value-icon:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+}
+
+.Select-value-label,
+.dash-dropdown .Select-value-label {
+    color: white !important;
+}
+
+/* No results message */
+.Select-noresults,
+.dash-dropdown .Select-noresults {
+    color: var(--text-secondary) !important;
+    padding: 10px !important;
+}
+
+/* Arrow indicator */
+.Select-arrow-zone,
+.dash-dropdown .Select-arrow-zone {
+    color: var(--text-secondary) !important;
+}
+
+/* Clear button */
+.Select-clear-zone,
+.dash-dropdown .Select-clear-zone {
+    color: var(--text-secondary) !important;
+}
+
+.Select-clear-zone:hover,
+.dash-dropdown .Select-clear-zone:hover {
+    color: var(--danger-color) !important;
+}
+
+/* React-Select (newer Dash versions) */
+.css-26l3qy-menu,
+.css-1nmdiq5-menu {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--shadow-lg) !important;
+}
+
+.css-1n7v3ny-option,
+.css-10wo9uf-option,
+.css-d7l1ni-option {
+    background: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+}
+
+.css-1n7v3ny-option:hover,
+.css-10wo9uf-option:hover,
+.css-d7l1ni-option:hover {
+    background: var(--primary-color) !important;
+    color: white !important;
+}
+
+.css-yk16xz-control,
+.css-1pahdxg-control,
+.css-13cymwt-control {
+    background: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+}
+
+.css-1uccc91-singleValue,
+.css-1dimb5e-singleValue,
+.css-1g6gooi {
+    color: var(--text-primary) !important;
+}
+
+.css-1wa3eu0-placeholder,
+.css-14el2xx-placeholder {
+    color: var(--text-secondary) !important;
+}
+
+.css-1okebmr-indicatorSeparator,
+.css-1u9des2-indicatorSeparator {
+    background-color: var(--border-color) !important;
+}
+
+.css-tlfecz-indicatorContainer,
+.css-1xc3v61-indicatorContainer {
+    color: var(--text-secondary) !important;
+}
+
+/* Signal dropdown specific */
+.signal-dropdown .Select-control {
+    min-height: 42px;
+}
+
+.signal-dropdown .Select-menu {
+    max-height: 300px;
+}
+
+/* ============================================
+   Collapsible Data Tree Styles
+   ============================================ */
+
+.tree-folder {
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.tree-folder:hover {
+    border-left-color: var(--primary-color);
+    background: rgba(52, 152, 219, 0.1);
+}
+
+.tree-folder > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+.tree-folder > summary::-webkit-details-marker {
+    display: none;
+}
+
+.tree-folder > summary::before {
+    content: '▶';
+    display: inline-block;
+    margin-right: 8px;
+    font-size: 0.7em;
+    color: var(--text-secondary);
+    transition: transform 0.2s ease;
+}
+
+.tree-folder[open] > summary::before {
+    transform: rotate(90deg);
+}
+
+.tree-folder > summary:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.tree-folder-content {
+    margin-left: 10px;
+    border-left: 1px dashed rgba(255, 255, 255, 0.2);
+    padding-left: 5px;
+}
+
+.tree-leaf {
+    padding: 4px 8px;
+    border-radius: 4px;
+    border-left: 2px solid transparent;
+    transition: all 0.2s ease;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.tree-leaf:hover {
+    background: rgba(46, 204, 113, 0.1);
+    border-left-color: var(--success-color);
+}
+
+/* Message type styling */
+.tree-leaf .text-muted {
+    font-size: 0.75rem;
+    word-break: break-all;
+}
+
+.tree-folder-header {
+    display: flex;
+    align-items: center;
+}
+
+/* Data tree container - additional styling */
+.data-tree-wrapper {
+    max-height: 350px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 8px;
+}
+
+/* ============================================
+   FORCE DARK THEME ON ALL DROPDOWNS
+   ============================================ */
+
+/* Target all Dash dropdowns aggressively */
+div[class*="dash-dropdown"] *,
+.dash-dropdown *,
+.Select *,
+.Select-menu-outer *,
+.VirtualizedSelectFocusedOption,
+.VirtualizedSelectOption {
+    background-color: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+}
+
+/* The main dropdown wrapper */
+.dash-dropdown {
+    background: var(--bg-card) !important;
+}
+
+/* The control/input area */
+.dash-dropdown > div,
+.dash-dropdown > div > div {
+    background: var(--bg-card) !important;
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+}
+
+/* The dropdown menu container */
+.dash-dropdown .Select-menu-outer,
+.dash-dropdown [class*="menu"] {
+    background: var(--bg-card) !important;
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Each option in the dropdown */
+.dash-dropdown .Select-option,
+.dash-dropdown [class*="option"],
+.VirtualizedSelectOption {
+    background: var(--bg-card) !important;
+    background-color: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    padding: 10px 12px !important;
+    cursor: pointer !important;
+}
+
+/* Hovered/focused option */
+.dash-dropdown .Select-option.is-focused,
+.dash-dropdown .Select-option:hover,
+.dash-dropdown [class*="option"]:hover,
+.VirtualizedSelectFocusedOption {
+    background: var(--primary-color) !important;
+    background-color: var(--primary-color) !important;
+    color: white !important;
+}
+
+/* Selected option */
+.dash-dropdown .Select-option.is-selected {
+    background: rgba(52, 152, 219, 0.4) !important;
+    background-color: rgba(52, 152, 219, 0.4) !important;
+}
+
+/* The input text */
+.dash-dropdown input,
+.dash-dropdown .Select-input input {
+    color: var(--text-primary) !important;
+    background: transparent !important;
+}
+
+/* Placeholder text */
+.dash-dropdown .Select-placeholder,
+.dash-dropdown [class*="placeholder"] {
+    color: var(--text-secondary) !important;
+}
+
+/* Selected value display */
+.dash-dropdown .Select-value-label,
+.dash-dropdown [class*="singleValue"] {
+    color: var(--text-primary) !important;
+}
+
+/* Multi-value chips */
+.dash-dropdown .Select-value {
+    background: var(--primary-color) !important;
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    border-radius: 4px !important;
+}
+
+.dash-dropdown .Select-value .Select-value-label {
+    color: white !important;
+}
+
+/* Loading indicator */
+.dash-dropdown .Select-loading {
+    border-color: var(--primary-color) transparent transparent !important;
+}
+
+/* No results */
+.dash-dropdown .Select-noresults {
+    background: var(--bg-card) !important;
+    color: var(--text-secondary) !important;
+    padding: 12px !important;
+    text-align: center !important;
+}
+
+/* Dropdown arrow */
+.dash-dropdown .Select-arrow {
+    border-color: var(--text-secondary) transparent transparent !important;
+}
+
+/* Clear button */
+.dash-dropdown .Select-clear {
+    color: var(--text-secondary) !important;
+}
+
+.dash-dropdown .Select-clear:hover {
+    color: var(--danger-color) !important;
+}
+
+/* Fix for virtualized lists */
+.VirtualizedSelectOptionsList {
+    background: var(--bg-card) !important;
+}
+
+/* ============================================
+   ID-BASED DROPDOWN OVERRIDES (highest specificity)
+   ============================================ */
+
+#signal-dropdown,
+#signal-dropdown > div,
+#signal-dropdown .Select,
+#signal-dropdown .Select-control,
+#signal-dropdown .Select-multi-value-wrapper,
+#signal-dropdown .Select-input,
+#plot-type-dropdown,
+#plot-type-dropdown > div,
+#speed-dropdown {
+    background: var(--bg-card) !important;
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+#signal-dropdown .Select-menu-outer,
+#signal-dropdown .Select-menu,
+#plot-type-dropdown .Select-menu-outer,
+#plot-type-dropdown .Select-menu {
+    background: #1a2744 !important;
+    background-color: #1a2744 !important;
+    border: 1px solid var(--border-color) !important;
+    z-index: 9999 !important;
+}
+
+#signal-dropdown .Select-option,
+#plot-type-dropdown .Select-option {
+    background: #1a2744 !important;
+    background-color: #1a2744 !important;
+    color: #ffffff !important;
+    padding: 10px 14px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+}
+
+#signal-dropdown .Select-option:hover,
+#signal-dropdown .Select-option.is-focused,
+#plot-type-dropdown .Select-option:hover,
+#plot-type-dropdown .Select-option.is-focused {
+    background: #3498db !important;
+    background-color: #3498db !important;
+    color: #ffffff !important;
+}
+
+#signal-dropdown .Select-placeholder,
+#plot-type-dropdown .Select-placeholder {
+    color: #888888 !important;
+}
+
+#signal-dropdown .Select-value-label,
+#signal-dropdown .Select-value .Select-value-label {
+    color: #ffffff !important;
+}
+
+#signal-dropdown .Select-noresults {
+    background: #1a2744 !important;
+    color: #aaaaaa !important;
+    padding: 15px !important;
+}
+
+/* ============================================
+   DROPDOWN MENU PORTAL FIX
+   React-Select renders menu in a portal/overlay
+   ============================================ */
+
+/* The dropdown menu that appears on click */
+.Select-menu-outer {
+    background: #1a2744 !important;
+    background-color: #1a2744 !important;
+    border: 1px solid #2d4a7c !important;
+    border-radius: 4px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+    z-index: 99999 !important;
+}
+
+.Select-menu {
+    background: #1a2744 !important;
+    background-color: #1a2744 !important;
+    max-height: 300px !important;
+}
+
+/* Individual menu items */
+.Select-option {
+    background: #1a2744 !important;
+    background-color: #1a2744 !important;
+    color: #ffffff !important;
+    padding: 12px 16px !important;
+    cursor: pointer !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.Select-option:last-child {
+    border-bottom: none !important;
+}
+
+/* Hover state */
+.Select-option.is-focused,
+.Select-option:hover {
+    background: #3498db !important;
+    background-color: #3498db !important;
+    color: #ffffff !important;
+}
+
+/* Selected state */
+.Select-option.is-selected {
+    background: #2980b9 !important;
+    background-color: #2980b9 !important;
+    color: #ffffff !important;
+}
+
+/* Virtualized dropdown (used for large lists) */
+.VirtualizedSelectOption {
+    background: #1a2744 !important;
+    background-color: #1a2744 !important;
+    color: #ffffff !important;
+    padding: 12px 16px !important;
+}
+
+.VirtualizedSelectFocusedOption {
+    background: #3498db !important;
+    background-color: #3498db !important;
+    color: #ffffff !important;
+}
+
+.VirtualizedSelectSelectedOption {
+    background: #2980b9 !important;
+    background-color: #2980b9 !important;
+}
+
+/* Fix the scrollable area inside menu */
+.Select-menu div[class] {
+    background: #1a2744 !important;
+}
+
+/* Override any white backgrounds globally on dropdown menus */
+div[class*="menu"],
+div[class*="MenuList"],
+div[class*="option"] {
+    background: #1a2744 !important;
+    background-color: #1a2744 !important;
+}
+
+/* React-Select v2+ class names */
+[class*="-menu"] {
+    background: #1a2744 !important;
+    background-color: #1a2744 !important;
+}
+
+[class*="-option"] {
+    background: #1a2744 !important;
+    background-color: #1a2744 !important;
+    color: #ffffff !important;
+}
+
+[class*="-option"]:hover,
+[class*="-option"][class*="focused"] {
+    background: #3498db !important;
+    background-color: #3498db !important;
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+.btn {
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), #2980b9) !important;
+    border: none !important;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+}
+
+.btn-group {
+    gap: 4px;
+}
+
+.btn-outline-info {
+    color: var(--info-color) !important;
+    border-color: var(--info-color) !important;
+}
+
+.btn-outline-info:hover {
+    background: var(--info-color) !important;
+    color: white !important;
+}
+
+.btn-outline-warning {
+    color: var(--warning-color) !important;
+    border-color: var(--warning-color) !important;
+}
+
+.btn-outline-warning:hover {
+    background: var(--warning-color) !important;
+    color: white !important;
+}
+
+/* ============================================
+   Playback Controls
+   ============================================ */
+.playback-card {
+    background: linear-gradient(180deg, var(--bg-card) 0%, rgba(15, 52, 96, 0.8) 100%) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px !important;
+}
+
+.playback-card-body {
+    padding: 1rem 1.5rem !important;
+}
+
+.time-display-container {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+}
+
+.time-display-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    letter-spacing: 1px;
+}
+
+.playback-btn-group {
+    gap: 4px;
+}
+
+.playback-btn {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    transition: all var(--transition-fast) !important;
+    border-width: 2px !important;
+}
+
+.playback-btn:hover {
+    transform: scale(1.1);
+}
+
+.playback-btn i {
+    font-size: 0.9rem;
+}
+
+.play-btn {
+    width: 52px !important;
+    height: 52px !important;
+    background: linear-gradient(135deg, var(--primary-color), #2980b9) !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+}
+
+.play-btn:hover {
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.6);
+    transform: scale(1.15);
+}
+
+.play-btn i {
+    font-size: 1.1rem;
+}
+
+.speed-select {
+    width: 80px !important;
+    background: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+    font-size: 0.85rem;
+    padding: 6px 10px;
+}
+
+.speed-select:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.25) !important;
+}
+
+/* Time slider */
+.time-slider .rc-slider-track {
+    background: linear-gradient(90deg, var(--primary-color), var(--info-color));
+    height: 6px;
+}
+
+.time-slider .rc-slider-handle {
+    border: 3px solid var(--primary-color);
+    background: white;
+    width: 18px;
+    height: 18px;
+    margin-top: -6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.time-slider .rc-slider-handle:hover,
+.time-slider .rc-slider-handle:active {
+    border-color: var(--info-color);
+    box-shadow: 0 2px 12px rgba(52, 152, 219, 0.5);
+}
+
+.time-slider .rc-slider-rail {
+    background: var(--border-color);
+    height: 6px;
+    border-radius: 3px;
+}
+
+.time-slider .rc-slider-mark-text {
+    color: var(--text-secondary) !important;
+    font-size: 0.75rem;
+}
+
+/* ============================================
+   Status Bar
+   ============================================ */
+footer.bg-light {
+    background: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+}
+
+/* ============================================
+   Statistics Cards
+   ============================================ */
+.card h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.text-primary { color: var(--primary-color) !important; }
+.text-success { color: var(--success-color) !important; }
+.text-info { color: var(--info-color) !important; }
+.text-warning { color: var(--warning-color) !important; }
+.text-danger { color: var(--danger-color) !important; }
+
+/* ============================================
+   Tables
+   ============================================ */
+.table {
+    color: var(--text-primary);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.table-hover tbody tr:hover {
+    background: rgba(52, 152, 219, 0.1);
+}
+
+.table thead th {
+    border-color: var(--border-color);
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+.table td, .table th {
+    border-color: var(--border-color);
+    padding: 0.5rem;
+}
+
+/* ============================================
+   Badges
+   ============================================ */
+.badge {
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+}
+
+/* ============================================
+   Alerts
+   ============================================ */
+.alert-info {
+    background: rgba(26, 188, 156, 0.15);
+    border-color: var(--info-color);
+    color: var(--info-color);
+}
+
+.alert-warning {
+    background: rgba(243, 156, 18, 0.15);
+    border-color: var(--warning-color);
+    color: var(--warning-color);
+}
+
+/* ============================================
+   Checklist / Radio
+   ============================================ */
+.form-check-input {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.form-check-label {
+    color: var(--text-primary);
+}
+
+/* ============================================
+   Scrollbar
+   ============================================ */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* ============================================
+   Loading Animation
+   ============================================ */
+._dash-loading {
+    background: var(--bg-dark) !important;
+}
+
+._dash-loading-callback {
+    background: rgba(52, 152, 219, 0.1) !important;
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 992px) {
+    .sidebar-col {
+        display: none;
+    }
+    
+    .main-col {
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+}
+
+/* ============================================
+   Animation Classes
+   ============================================ */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
